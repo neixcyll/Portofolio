@@ -44,14 +44,14 @@ export const AboutSection = () => {
               {/* Profile Image Placeholder */}
               <div className="absolute inset-8 flex items-center justify-center">
                 <div className="text-center">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={isInView ? { scale: 1 } : {}}
-                    transition={{ delay: 0.3, type: "spring" }}
-                    className="w-40 h-40 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center"
-                  >
-                    <span className="text-6xl font-serif text-gradient">A</span>
-                  </motion.div>
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={isInView ? { scale: 1 } : {}}
+                transition={{ delay: 0.3, type: "spring" }}
+                className="w-40 h-40 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center"
+              >
+                <span className="text-6xl font-bold text-gradient">A</span>
+              </motion.div>
                   <p className="text-sm text-muted-foreground">Your Photo Here</p>
                 </div>
               </div>
@@ -64,7 +64,7 @@ export const AboutSection = () => {
               transition={{ delay: 0.5 }}
               className="absolute -bottom-6 -right-6 lg:right-auto lg:-left-6 px-6 py-4 bg-card border border-border rounded-xl shadow-lg"
             >
-              <p className="text-3xl font-serif font-bold text-gradient">5+</p>
+              <p className="text-3xl font-bold text-gradient">5+</p>
               <p className="text-sm text-muted-foreground">Years Experience</p>
             </motion.div>
           </motion.div>
@@ -83,7 +83,7 @@ export const AboutSection = () => {
               About Me
             </motion.span>
             
-            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
               Passionate About Creating{" "}
               <span className="text-gradient">Impactful</span> Digital Solutions
             </h2>
@@ -116,7 +116,7 @@ export const AboutSection = () => {
                     <stat.icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-2xl font-serif font-bold text-foreground">{stat.value}</p>
+                    <p className="text-2xl font-bold text-foreground">{stat.value}</p>
                     <p className="text-xs text-muted-foreground">{stat.label}</p>
                   </div>
                 </motion.div>
