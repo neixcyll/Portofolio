@@ -32,7 +32,7 @@ export const Footer = () => {
           <div>
             <motion.a
               href="#home"
-              className="text-2xl font-serif font-bold text-gradient inline-block mb-4"
+              className="text-2xl font-bold text-gradient inline-block mb-4"
               whileHover={{ scale: 1.05 }}
             >
               Portfolio

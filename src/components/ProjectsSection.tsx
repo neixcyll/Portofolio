@@ -65,7 +65,7 @@ export const ProjectsSection = () => {
           <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
             Portfolio
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             Selected <span className="text-gradient">Works</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -150,7 +150,7 @@ export const ProjectsSection = () => {
                     <span className="text-xs text-primary uppercase tracking-wider">
                       {project.category}
                     </span>
-                    <h3 className="text-xl font-serif font-bold mt-1 group-hover:text-gradient transition-all duration-300">
+                    <h3 className="text-xl font-bold mt-1 group-hover:text-gradient transition-all duration-300">
                       {project.title}
                     </h3>
                   </div>

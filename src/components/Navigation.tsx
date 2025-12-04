@@ -38,7 +38,7 @@ export const Navigation = () => {
           {/* Logo */}
           <motion.a
             href="#home"
-            className="text-2xl font-serif font-bold text-gradient"
+            className="text-2xl font-bold text-gradient"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

@@ -53,7 +53,7 @@ export const ContactSection = () => {
           <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
             Get In Touch
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             Let's <span className="text-gradient">Connect</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -71,7 +71,7 @@ export const ContactSection = () => {
             className="lg:col-span-2 space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-serif font-bold mb-4">
+              <h3 className="text-2xl font-bold mb-4">
                 Contact Information
               </h3>
               <p className="text-muted-foreground leading-relaxed">

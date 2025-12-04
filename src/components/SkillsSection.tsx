@@ -69,7 +69,7 @@ export const SkillsSection = () => {
           <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
             Expertise
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             Skills & <span className="text-gradient">Technologies</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -103,7 +103,7 @@ export const SkillsSection = () => {
                 </motion.div>
 
                 {/* Content */}
-                <h3 className="text-xl font-serif font-bold mb-3 group-hover:text-gradient transition-all duration-300">
+                <h3 className="text-xl font-bold mb-3 group-hover:text-gradient transition-all duration-300">
                   {skill.title}
                 </h3>
                 <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
@@ -146,7 +146,7 @@ export const SkillsSection = () => {
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 0.8 + index * 0.1 }}
               >
-                <p className="text-3xl md:text-4xl font-serif font-bold text-gradient mb-2">
+                <p className="text-3xl md:text-4xl font-bold text-gradient mb-2">
                   {stat.value}
                 </p>
                 <p className="text-sm text-muted-foreground">{stat.label}</p>
