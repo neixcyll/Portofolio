@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, Phone, MapPin, Send, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 const contactInfo = [
@@ -15,7 +15,6 @@ export const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,163 +22,111 @@ export const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    
     toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
+      title: "Message sent! ✨",
+      description: "I'll get back to you soon.",
     });
-    
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setFormData({ name: "", email: "", message: "" });
     setIsSubmitting(false);
   };
 
   return (
     <section id="contact" className="py-32 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/10 to-background" />
-      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-primary/5 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-1/2"
+        style={{ background: "radial-gradient(ellipse at bottom, hsla(270, 95%, 65%, 0.05) 0%, transparent 70%)" }}
+      />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10" ref={ref}>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
-            Get In Touch
+          <span className="inline-block px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 rounded-full mb-6">
+            Contact
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Let's <span className="text-gradient">Connect</span>
+            Let's <span className="text-gradient">connect</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Have a project in mind? I'd love to hear about it. Let's discuss 
-            how we can work together to bring your ideas to life.
+          <p className="text-muted-foreground max-w-lg mx-auto">
+            Have a project in mind? Let's make it happen.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
+        <div className="grid lg:grid-cols-5 gap-12">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-2 space-y-8"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-2 space-y-6"
           >
-            <div>
-              <h3 className="text-2xl font-bold mb-4">
-                Contact Information
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Feel free to reach out through any of the following channels. 
-                I typically respond within 24 hours.
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={info.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  className="flex items-center gap-4 group"
-                >
-                  <div className="p-4 rounded-xl bg-secondary border border-border group-hover:border-primary/50 group-hover:bg-primary/10 transition-all duration-300">
-                    <info.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider">
-                      {info.label}
-                    </p>
-                    <p className="text-foreground font-medium">{info.value}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Decorative Element */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.7 }}
-              className="hidden lg:block pt-8"
-            >
-              <div className="relative">
-                <div className="w-48 h-48 border border-primary/20 rounded-full" />
-                <div className="absolute top-4 left-4 w-40 h-40 border border-primary/30 rounded-full" />
-                <div className="absolute top-8 left-8 w-32 h-32 bg-primary/10 rounded-full animate-pulse-slow" />
-              </div>
-            </motion.div>
+            {contactInfo.map((info, index) => (
+              <motion.div
+                key={info.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.3 + index * 0.1 }}
+                className="flex items-center gap-4 p-4 glass-card rounded-2xl group hover:border-primary/30 transition-all"
+              >
+                <div className="p-3 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20">
+                  <info.icon className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
+                    {info.label}
+                  </p>
+                  <p className="font-medium">{info.value}</p>
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
 
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="lg:col-span-3"
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Name</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-4 bg-secondary border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 placeholder:text-muted-foreground"
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Email</label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-4 bg-secondary border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 placeholder:text-muted-foreground"
-                    placeholder="john@example.com"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Subject</label>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 <input
                   type="text"
                   required
-                  value={formData.subject}
-                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full px-4 py-4 bg-secondary border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 placeholder:text-muted-foreground"
-                  placeholder="Project Inquiry"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-5 py-4 glass-card rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-muted-foreground"
+                  placeholder="Name"
+                />
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-5 py-4 glass-card rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-muted-foreground"
+                  placeholder="Email"
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">Message</label>
-                <textarea
-                  required
-                  rows={6}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-4 bg-secondary border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 resize-none placeholder:text-muted-foreground"
-                  placeholder="Tell me about your project..."
-                />
-              </div>
+              <textarea
+                required
+                rows={5}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                className="w-full px-5 py-4 glass-card rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none placeholder:text-muted-foreground"
+                placeholder="Your message..."
+              />
 
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed glow-gold"
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 glow-cyan"
               >
                 {isSubmitting ? (
                   <>
@@ -192,7 +139,7 @@ export const ContactSection = () => {
                   </>
                 ) : (
                   <>
-                    Send Message
+                    Send message
                     <Send size={18} />
                   </>
                 )}

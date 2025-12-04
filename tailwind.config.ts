@@ -47,13 +47,17 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        gold: {
-          DEFAULT: "hsl(var(--gold))",
-          light: "hsl(var(--gold-light))",
-          dark: "hsl(var(--gold-dark))",
+        cyan: {
+          DEFAULT: "hsl(var(--cyan))",
+          light: "hsl(var(--cyan-light))",
+          dark: "hsl(var(--cyan-dark))",
         },
-        surface: {
-          elevated: "hsl(var(--surface-elevated))",
+        purple: {
+          DEFAULT: "hsl(var(--purple))",
+          light: "hsl(var(--purple-light))",
+        },
+        pink: {
+          DEFAULT: "hsl(var(--pink))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -72,8 +76,8 @@ export default {
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "calc(var(--radius) - 4px)",
+        sm: "calc(var(--radius) - 8px)",
       },
       keyframes: {
         "accordion-down": {
@@ -104,13 +108,9 @@ export default {
           "0%": { opacity: "0", transform: "translateX(30px)" },
           "100%": { opacity: "1", transform: "translateX(0)" },
         },
-        "text-reveal": {
-          "0%": { clipPath: "inset(0 100% 0 0)" },
-          "100%": { clipPath: "inset(0 0 0 0)" },
-        },
-        "line-grow": {
-          "0%": { transform: "scaleX(0)" },
-          "100%": { transform: "scaleX(1)" },
+        "glow-pulse": {
+          "0%, 100%": { boxShadow: "0 0 20px hsl(190 95% 55% / 0.3)" },
+          "50%": { boxShadow: "0 0 40px hsl(190 95% 55% / 0.5), 0 0 60px hsl(270 95% 65% / 0.3)" },
         },
       },
       animation: {
@@ -121,12 +121,11 @@ export default {
         "scale-in": "scale-in 0.6s ease-out forwards",
         "slide-in-left": "slide-in-left 0.8s ease-out forwards",
         "slide-in-right": "slide-in-right 0.8s ease-out forwards",
-        "text-reveal": "text-reveal 1s ease-out forwards",
-        "line-grow": "line-grow 1s ease-out forwards",
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-gold': 'linear-gradient(135deg, hsl(var(--gold)), hsl(var(--gold-dark)))',
+        'gradient-cyber': 'linear-gradient(135deg, hsl(var(--cyan)), hsl(var(--purple)))',
       },
     },
   },

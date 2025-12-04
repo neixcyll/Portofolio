@@ -26,10 +26,10 @@ export const Navigation = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border/50"
+          ? "glass border-b border-border/50"
           : "bg-transparent"
       }`}
     >
@@ -38,40 +38,42 @@ export const Navigation = () => {
           {/* Logo */}
           <motion.a
             href="#home"
-            className="text-2xl font-bold text-gradient"
+            className="text-xl font-bold text-gradient"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Portfolio
+            portfolio.
           </motion.a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link, index) => (
               <motion.a
                 key={link.name}
                 href={link.href}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 + 0.3 }}
-                className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 group"
+                transition={{ delay: index * 0.1 + 0.2 }}
+                className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 group"
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-accent transition-all duration-300 group-hover:w-4/5 rounded-full" />
               </motion.a>
             ))}
-            <motion.a
-              href="#contact"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-full hover:bg-primary/90 transition-all duration-300"
-            >
-              Hire Me
-            </motion.a>
           </div>
+
+          {/* CTA Button */}
+          <motion.a
+            href="#contact"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="hidden md:inline-flex px-6 py-2.5 bg-gradient-to-r from-primary to-accent text-primary-foreground text-sm font-semibold rounded-xl hover:opacity-90 transition-all duration-300"
+          >
+            Hire me
+          </motion.a>
 
           {/* Mobile Menu Button */}
           <button
@@ -90,9 +92,9 @@ export const Navigation = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border"
+            className="md:hidden glass border-b border-border"
           >
-            <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
+            <div className="container mx-auto px-6 py-6 flex flex-col gap-2">
               {navLinks.map((link, index) => (
                 <motion.a
                   key={link.name}
@@ -101,7 +103,7 @@ export const Navigation = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
+                  className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors py-3 px-4 rounded-xl hover:bg-secondary/50"
                 >
                   {link.name}
                 </motion.a>
@@ -112,9 +114,9 @@ export const Navigation = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="mt-4 px-6 py-3 bg-primary text-primary-foreground text-center font-medium rounded-full"
+                className="mt-4 px-6 py-3 bg-gradient-to-r from-primary to-accent text-primary-foreground text-center font-semibold rounded-xl"
               >
-                Hire Me
+                Hire me
               </motion.a>
             </div>
           </motion.div>

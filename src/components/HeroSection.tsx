@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Twitter } from "lucide-react";
 import { useEffect, useRef } from "react";
 
-// Animated particles background
-const ParticlesBackground = () => {
+// Animated cyber grid background
+const CyberBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -21,6 +21,7 @@ const ParticlesBackground = () => {
       speedX: number;
       speedY: number;
       opacity: number;
+      color: string;
     }> = [];
 
     const resizeCanvas = () => {
@@ -28,18 +29,25 @@ const ParticlesBackground = () => {
       canvas.height = window.innerHeight;
     };
 
+    const colors = [
+      "hsla(190, 95%, 55%, ",
+      "hsla(270, 95%, 65%, ",
+      "hsla(220, 90%, 60%, ",
+    ];
+
     const createParticles = () => {
       particles = [];
-      const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
+      const particleCount = Math.floor((canvas.width * canvas.height) / 12000);
       
       for (let i = 0; i < particleCount; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          size: Math.random() * 2 + 0.5,
-          speedX: (Math.random() - 0.5) * 0.5,
-          speedY: (Math.random() - 0.5) * 0.5,
-          opacity: Math.random() * 0.5 + 0.2,
+          size: Math.random() * 2 + 1,
+          speedX: (Math.random() - 0.5) * 0.8,
+          speedY: (Math.random() - 0.5) * 0.8,
+          opacity: Math.random() * 0.6 + 0.2,
+          color: colors[Math.floor(Math.random() * colors.length)],
         });
       }
     };
@@ -48,21 +56,22 @@ const ParticlesBackground = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach((particle, index) => {
-        // Update position
         particle.x += particle.speedX;
         particle.y += particle.speedY;
 
-        // Wrap around edges
         if (particle.x < 0) particle.x = canvas.width;
         if (particle.x > canvas.width) particle.x = 0;
         if (particle.y < 0) particle.y = canvas.height;
         if (particle.y > canvas.height) particle.y = 0;
 
-        // Draw particle
+        // Draw particle with glow
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(45, 80%, 55%, ${particle.opacity})`;
+        ctx.fillStyle = `${particle.color}${particle.opacity})`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = `${particle.color}0.5)`;
         ctx.fill();
+        ctx.shadowBlur = 0;
 
         // Draw connections
         particles.forEach((otherParticle, otherIndex) => {
@@ -71,12 +80,18 @@ const ParticlesBackground = () => {
           const dy = particle.y - otherParticle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 120) {
+          if (distance < 150) {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `hsla(45, 80%, 55%, ${0.1 * (1 - distance / 120)})`;
-            ctx.lineWidth = 0.5;
+            const gradient = ctx.createLinearGradient(
+              particle.x, particle.y, 
+              otherParticle.x, otherParticle.y
+            );
+            gradient.addColorStop(0, `${particle.color}${0.15 * (1 - distance / 150)})`);
+            gradient.addColorStop(1, `${otherParticle.color}${0.15 * (1 - distance / 150)})`);
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
         });
@@ -115,92 +130,46 @@ export const HeroSection = () => {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-background">
-        {/* Particles */}
-        <ParticlesBackground />
+      {/* Background */}
+      <div className="absolute inset-0 bg-background cyber-grid">
+        <CyberBackground />
         
         {/* Gradient Orbs */}
         <motion.div
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px]"
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, 100, 0],
-            y: [0, 50, 0],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-primary/15 rounded-full blur-[100px]"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            x: [0, -80, 0],
-            y: [0, -60, 0],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[150px]"
+          className="absolute top-1/3 left-1/4 w-[600px] h-[600px] rounded-full blur-[150px]"
+          style={{ background: "radial-gradient(circle, hsla(190, 95%, 55%, 0.15) 0%, transparent 70%)" }}
           animate={{
             scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
+            x: [0, 50, 0],
+            opacity: [0.5, 0.8, 0.5],
           }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
-        
-        {/* Animated Lines */}
-        <svg className="absolute inset-0 w-full h-full opacity-10">
-          <motion.line
-            x1="0%"
-            y1="30%"
-            x2="100%"
-            y2="70%"
-            stroke="hsl(45, 80%, 55%)"
-            strokeWidth="1"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
-          />
-          <motion.line
-            x1="100%"
-            y1="20%"
-            x2="0%"
-            y2="80%"
-            stroke="hsl(45, 80%, 55%)"
-            strokeWidth="1"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 4, repeat: Infinity, repeatType: "reverse", delay: 1 }}
-          />
-        </svg>
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[130px]"
+          style={{ background: "radial-gradient(circle, hsla(270, 95%, 65%, 0.12) 0%, transparent 70%)" }}
+          animate={{
+            scale: [1.2, 1, 1.2],
+            x: [0, -40, 0],
+            opacity: [0.4, 0.7, 0.4],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
       </div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 lg:px-12">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Tagline */}
+          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-6"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mb-8"
           >
-            <span className="inline-block px-4 py-2 text-xs font-medium tracking-widest uppercase text-primary border border-primary/30 rounded-full">
-              Creative Developer & Designer
+            <span className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold tracking-wider uppercase glass rounded-full border-gradient">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              Available for work
             </span>
           </motion.div>
 
@@ -208,46 +177,46 @@ export const HeroSection = () => {
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8"
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-8"
           >
-            <span className="block text-foreground">Crafting Digital</span>
-            <span className="block text-gradient">Experiences</span>
+            <span className="block text-foreground">I create</span>
+            <span className="block text-gradient">digital magic</span>
           </motion.h1>
 
           {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed font-light"
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed font-light"
           >
-            I transform ideas into exceptional digital products through thoughtful design 
-            and cutting-edge development. Let's create something extraordinary together.
+            Developer & designer crafting immersive web experiences 
+            with clean code and stunning visuals.
           </motion.p>
 
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
             <motion.a
               href="#projects"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-full hover:bg-primary/90 transition-all duration-300 glow-gold"
+              className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold rounded-2xl transition-all duration-300 glow-cyan"
             >
-              View My Work
+              See my work
             </motion.a>
             <motion.a
               href="#contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 border border-border text-foreground font-semibold rounded-full hover:bg-secondary/50 transition-all duration-300"
+              className="px-8 py-4 glass rounded-2xl font-semibold hover:bg-secondary/50 transition-all duration-300"
             >
-              Get In Touch
+              Let's talk
             </motion.a>
           </motion.div>
 
@@ -255,22 +224,23 @@ export const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-            className="flex items-center justify-center gap-6"
+            transition={{ duration: 0.6, delay: 1 }}
+            className="flex items-center justify-center gap-4"
           >
             {[
-              { icon: Github, href: "#" },
-              { icon: Linkedin, href: "#" },
-              { icon: Twitter, href: "#" },
+              { icon: Github, href: "#", label: "GitHub" },
+              { icon: Linkedin, href: "#", label: "LinkedIn" },
+              { icon: Twitter, href: "#", label: "Twitter" },
             ].map((social, index) => (
               <motion.a
                 key={index}
                 href={social.href}
-                whileHover={{ scale: 1.2, y: -3 }}
-                whileTap={{ scale: 0.9 }}
-                className="text-muted-foreground hover:text-primary transition-colors duration-300"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-3 glass rounded-xl text-muted-foreground hover:text-primary transition-all duration-300"
+                aria-label={social.label}
               >
-                <social.icon size={22} />
+                <social.icon size={20} />
               </motion.a>
             ))}
           </motion.div>
@@ -281,17 +251,17 @@ export const HeroSection = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <motion.a
           href="#about"
-          animate={{ y: [0, 10, 0] }}
+          animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
           className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
         >
-          <span className="text-xs uppercase tracking-widest font-medium">Scroll</span>
-          <ArrowDown size={16} />
+          <span className="text-[10px] uppercase tracking-[0.2em] font-medium">Scroll</span>
+          <ArrowDown size={14} />
         </motion.a>
       </motion.div>
     </section>
