@@ -5,45 +5,33 @@ import { Code2, Palette, Smartphone, Globe, Database, Sparkles } from "lucide-re
 const skills = [
   {
     icon: Code2,
-    title: "Frontend Development",
-    description: "Building responsive and interactive user interfaces with modern frameworks.",
-    technologies: ["React", "TypeScript", "Next.js", "Vue.js", "Tailwind CSS"],
-    color: "from-blue-500/20 to-cyan-500/20",
+    title: "Frontend",
+    technologies: ["React", "TypeScript", "Next.js", "Tailwind"],
   },
   {
     icon: Database,
-    title: "Backend Development",
-    description: "Creating robust server-side applications and RESTful APIs.",
-    technologies: ["Node.js", "Python", "PostgreSQL", "MongoDB", "GraphQL"],
-    color: "from-green-500/20 to-emerald-500/20",
+    title: "Backend",
+    technologies: ["Node.js", "Python", "PostgreSQL", "GraphQL"],
   },
   {
     icon: Palette,
-    title: "UI/UX Design",
-    description: "Designing intuitive and visually stunning user experiences.",
-    technologies: ["Figma", "Adobe XD", "Photoshop", "Illustrator", "Framer"],
-    color: "from-pink-500/20 to-purple-500/20",
+    title: "Design",
+    technologies: ["Figma", "Adobe XD", "Framer"],
   },
   {
     icon: Smartphone,
-    title: "Mobile Development",
-    description: "Developing cross-platform mobile applications.",
-    technologies: ["React Native", "Flutter", "iOS", "Android", "Expo"],
-    color: "from-orange-500/20 to-yellow-500/20",
+    title: "Mobile",
+    technologies: ["React Native", "Flutter", "Expo"],
   },
   {
     icon: Globe,
-    title: "DevOps & Cloud",
-    description: "Deploying and managing scalable cloud infrastructure.",
-    technologies: ["AWS", "Docker", "Kubernetes", "CI/CD", "Vercel"],
-    color: "from-indigo-500/20 to-violet-500/20",
+    title: "DevOps",
+    technologies: ["AWS", "Docker", "Vercel"],
   },
   {
     icon: Sparkles,
-    title: "AI & Innovation",
-    description: "Integrating AI solutions and exploring emerging technologies.",
-    technologies: ["OpenAI", "TensorFlow", "ChatGPT", "Machine Learning", "Web3"],
-    color: "from-primary/20 to-gold-light/20",
+    title: "AI & ML",
+    technologies: ["OpenAI", "TensorFlow", "LangChain"],
   },
 ];
 
@@ -53,9 +41,10 @@ export const SkillsSection = () => {
 
   return (
     <section id="skills" className="py-32 relative overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[200px]"
+          style={{ background: "radial-gradient(circle, hsla(190, 95%, 55%, 0.08) 0%, transparent 70%)" }}
+        />
       </div>
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10" ref={ref}>
@@ -63,93 +52,81 @@ export const SkillsSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
-            Expertise
+          <span className="inline-block px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 rounded-full mb-6">
+            Skills
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Skills & <span className="text-gradient">Technologies</span>
+            Tech <span className="text-gradient">stack</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A comprehensive toolkit of modern technologies and methodologies 
-            to bring your vision to life
+          <p className="text-muted-foreground max-w-lg mx-auto">
+            Modern tools and technologies I work with
           </p>
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {skills.map((skill, index) => (
             <motion.div
               key={skill.title}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="group relative p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all duration-500"
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="group p-6 rounded-3xl glass-card hover:border-primary/30 transition-all duration-300"
             >
-              {/* Gradient Background */}
-              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-              
-              <div className="relative z-10">
-                {/* Icon */}
-                <motion.div
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                  className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors"
-                >
-                  <skill.icon className="w-7 h-7 text-primary" />
-                </motion.div>
+              <motion.div
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.5 }}
+                className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-4"
+              >
+                <skill.icon className="w-6 h-6 text-primary" />
+              </motion.div>
 
-                {/* Content */}
-                <h3 className="text-xl font-bold mb-3 group-hover:text-gradient transition-all duration-300">
-                  {skill.title}
-                </h3>
-                <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-                  {skill.description}
-                </p>
+              <h3 className="text-lg font-bold mb-3 group-hover:text-gradient transition-all duration-300">
+                {skill.title}
+              </h3>
 
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2">
-                  {skill.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 text-xs bg-secondary text-secondary-foreground rounded-full group-hover:bg-secondary/80 transition-colors"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+              <div className="flex flex-wrap gap-1.5">
+                {skill.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-2.5 py-1 text-[10px] bg-secondary rounded-lg text-muted-foreground"
+                  >
+                    {tech}
+                  </span>
+                ))}
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Additional Stats */}
+        {/* Stats Bar */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-20 p-8 rounded-2xl bg-gradient-to-r from-primary/10 via-secondary to-primary/10 border border-border"
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-16 p-6 rounded-3xl glass-card"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { value: "99%", label: "Client Satisfaction" },
-              { value: "24/7", label: "Support Available" },
-              { value: "<1hr", label: "Response Time" },
-              { value: "100%", label: "Project Success" },
+              { value: "99%", label: "Satisfaction" },
+              { value: "24/7", label: "Support" },
+              { value: "<1hr", label: "Response" },
+              { value: "100%", label: "Success" },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.8 + index * 0.1 }}
+                transition={{ delay: 0.6 + index * 0.1 }}
               >
-                <p className="text-3xl md:text-4xl font-bold text-gradient mb-2">
+                <p className="text-2xl md:text-3xl font-bold text-gradient mb-1">
                   {stat.value}
                 </p>
-                <p className="text-sm text-muted-foreground">{stat.label}</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</p>
               </motion.div>
             ))}
           </div>
