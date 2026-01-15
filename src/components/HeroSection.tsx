@@ -169,7 +169,7 @@ export const HeroSection = () => {
           >
             <span className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold tracking-wider uppercase glass rounded-full border-gradient">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              Available for work
+              HI, I'm
             </span>
           </motion.div>
 
@@ -180,8 +180,7 @@ export const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-8"
           >
-            <span className="block text-foreground">I create</span>
-            <span className="block text-gradient">digital magic</span>
+            <span className="block text-gradient">Neil SJ </span>
           </motion.h1>
 
           {/* Description */}
@@ -191,8 +190,7 @@ export const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed font-light"
           >
-            Developer & designer crafting immersive web experiences 
-            with clean code and stunning visuals.
+           Dari Surabaya, sekolah di SMK Negeri 2 Surabaya jurusan Rekayasa Perangkat Lunak
           </motion.p>
 
           {/* CTA Buttons */}
@@ -228,9 +226,7 @@ export const HeroSection = () => {
             className="flex items-center justify-center gap-4"
           >
             {[
-              { icon: Github, href: "#", label: "GitHub" },
-              { icon: Linkedin, href: "#", label: "LinkedIn" },
-              { icon: Twitter, href: "#", label: "Twitter" },
+              { icon: Github, href: "https://github.com/neixcyll", label: "GitHub" },
             ].map((social, index) => (
               <motion.a
                 key={index}

@@ -3,9 +3,9 @@ import { useRef } from "react";
 import { Award, Briefcase, Coffee, Users } from "lucide-react";
 
 const stats = [
-  { icon: Briefcase, value: "50+", label: "Projects" },
-  { icon: Users, value: "30+", label: "Clients" },
-  { icon: Award, value: "5+", label: "Years" },
+  { icon: Briefcase, value: "5+", label: "Projects" },
+  // { icon: Users, value: "30+", label: "Clients" },
+  { icon: Award, value: "2+", label: "Years" },
   { icon: Coffee, value: "∞", label: "Coffee" },
 ];
 
@@ -38,28 +38,27 @@ export const AboutSection = () => {
               />
               
               {/* Center content */}
-              <div className="absolute inset-16 glass-card rounded-3xl flex items-center justify-center">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={isInView ? { scale: 1 } : {}}
-                  transition={{ delay: 0.3, type: "spring" }}
-                  className="text-center"
-                >
-                  <span className="text-7xl font-bold text-gradient">A</span>
-                  <p className="text-xs text-muted-foreground mt-2">Your photo</p>
-                </motion.div>
-              </div>
+<div className="absolute inset-16 glass-card rounded-3xl overflow-hidden flex items-center justify-center">
+  <motion.img
+    src="/papo.jpeg" // ganti dengan path gambarmu
+    alt="Profile photo"
+    initial={{ scale: 0 }}
+    animate={isInView ? { scale: 1 } : {}}
+    transition={{ delay: 0.3, type: "spring" }}
+    className="h-full w-full object-cover"
+  />
+</div>
 
               {/* Floating badges */}
-              <motion.div
+              {/* <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 0.5 }}
                 className="absolute -bottom-4 -right-4 px-5 py-3 glass-card rounded-2xl"
               >
-                <p className="text-2xl font-bold text-gradient">5+</p>
+                <p className="text-2xl font-bold text-gradient">2+</p>
                 <p className="text-xs text-muted-foreground">Years exp.</p>
-              </motion.div>
+              </motion.div> */}
             </div>
           </motion.div>
 
@@ -77,19 +76,16 @@ export const AboutSection = () => {
               About me
             </motion.span>
             
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-              Passionate about{" "}
-              <span className="text-gradient">building</span> cool stuff
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-gradient">
+                Website Developer
             </h2>
             
             <div className="space-y-4 text-muted-foreground leading-relaxed mb-10">
               <p>
-                With over 5 years of experience, I specialize in creating 
-                beautiful, functional digital experiences that users love.
+                Saya adalah Web Developer yang fokus membangun aplikasi web fungsional seperti sistem POS, manajemen outlet, dan dashboard bisnis.
               </p>
               <p>
-                My approach combines clean code with creative design thinking, 
-                ensuring every project exceeds expectations.
+                Saya terbiasa menggunakan Laravel, React, dan modern UI untuk membuat aplikasi yang rapi, scalable, dan mudah digunakan.
               </p>
             </div>
 
