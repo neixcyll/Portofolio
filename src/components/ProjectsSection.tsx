@@ -26,7 +26,7 @@ const projects: Project[] = [
     gradient: "from-cyan-500/20 to-blue-500/20",
     image: "/project/fixiestore.png", // ✅ FIX: projects (bukan project)
     githubUrl: "https://github.com/neixcyll/FixieStoreV2.0",
-    liveUrl: "https://fixiestore.vercel.app",
+    liveUrl: "https://vercel.com/neils-projects-628fce30/fixiestore/3Xqedhe7mPiuAVVDQsco86QesEqw",
   },
   // {
   //   id: 2,
