@@ -2,10 +2,8 @@ import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter, Instagram, ArrowUp } from "lucide-react";
 
 const socialLinks = [
-  { icon: Github, href: "#", label: "GitHub" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: Github, href: "https://github.com/neixcyll", label: "GitHub" },
+  { icon: Instagram, href: "https://www.instagram.com/neixcyll/", label: "Instagram" },
 ];
 
 const footerLinks = [
@@ -34,11 +32,8 @@ export const Footer = () => {
               className="text-xl font-bold text-gradient inline-block mb-3"
               whileHover={{ scale: 1.05 }}
             >
-              portfolio.
+              Portofolio
             </motion.a>
-            <p className="text-sm text-muted-foreground">
-              Creating digital experiences with passion.
-            </p>
           </div>
 
           {/* Links */}

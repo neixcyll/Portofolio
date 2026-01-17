@@ -6,32 +6,17 @@ const skills = [
   {
     icon: Code2,
     title: "Frontend",
-    technologies: ["React", "TypeScript", "Next.js", "Tailwind"],
+    technologies: ["React", "TypeScript", "Tailwind"],
   },
   {
     icon: Database,
     title: "Backend",
-    technologies: ["Node.js", "Python", "PostgreSQL", "GraphQL"],
-  },
-  {
-    icon: Palette,
-    title: "Design",
-    technologies: ["Figma", "Adobe XD", "Framer"],
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile",
-    technologies: ["React Native", "Flutter", "Expo"],
-  },
-  {
-    icon: Globe,
-    title: "DevOps",
-    technologies: ["AWS", "Docker", "Vercel"],
+    technologies: ["mysql", "Supabase", "Node.js", "Laravel"],
   },
   {
     icon: Sparkles,
-    title: "AI & ML",
-    technologies: ["OpenAI", "TensorFlow", "LangChain"],
+    title: "AI",
+    technologies: ["OpenAI", "Gemini"],
   },
 ];
 
@@ -56,13 +41,13 @@ export const SkillsSection = () => {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 rounded-full mb-6">
-            Skills
+            Skill
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             Tech <span className="text-gradient">stack</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Modern tools and technologies I work with
+            Saya mengerjakan menggunakan teknologi terbaru untuk memastikan hasil yang optimal dan berkualitas tinggi.
           </p>
         </motion.div>
 
@@ -102,35 +87,6 @@ export const SkillsSection = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* Stats Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-16 p-6 rounded-3xl glass-card"
-        >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {[
-              { value: "99%", label: "Satisfaction" },
-              { value: "24/7", label: "Support" },
-              { value: "<1hr", label: "Response" },
-              { value: "100%", label: "Success" },
-            ].map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.6 + index * 0.1 }}
-              >
-                <p className="text-2xl md:text-3xl font-bold text-gradient mb-1">
-                  {stat.value}
-                </p>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

@@ -2,58 +2,90 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
 
-const projects = [
+type Project = {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  tags: string[];
+  gradient: string;
+  image?: string;
+
+  // ✅ links
+  githubUrl?: string;
+  liveUrl?: string;
+};
+
+const projects: Project[] = [
   {
     id: 1,
-    title: "E-Commerce Platform",
+    title: "FIxieStore",
     category: "Web Dev",
-    description: "Modern e-commerce with seamless checkout and real-time inventory.",
-    tags: ["React", "Node.js", "Stripe"],
+    description: "Website e-commerce untuk penjualan sparepart sepeda Fixie",
+    tags: ["React", "Node.js", "Supabase"],
     gradient: "from-cyan-500/20 to-blue-500/20",
+    image: "/project/fixiestore.png", // ✅ FIX: projects (bukan project)
+    githubUrl: "https://github.com/neixcyll/FixieStoreV2.0",
+    liveUrl: "https://fixiestore.vercel.app",
   },
-  {
-    id: 2,
-    title: "Finance Dashboard",
-    category: "UI/UX",
-    description: "Analytics dashboard with real-time data visualization.",
-    tags: ["Figma", "React", "D3.js"],
-    gradient: "from-purple-500/20 to-pink-500/20",
-  },
-  {
-    id: 3,
-    title: "Social App",
-    category: "Mobile",
-    description: "Feature-rich social platform connecting communities.",
-    tags: ["React Native", "Firebase"],
-    gradient: "from-green-500/20 to-emerald-500/20",
-  },
-  {
-    id: 4,
-    title: "Brand Identity",
-    category: "Design",
-    description: "Complete brand overhaul with logo and style guidelines.",
-    tags: ["Illustrator", "Branding"],
-    gradient: "from-orange-500/20 to-yellow-500/20",
-  },
+  // {
+  //   id: 2,
+  //   title: "Finance Dashboard",
+  //   category: "UI/UX",
+  //   description: "Analytics dashboard with real-time data visualization.",
+  //   tags: ["Figma", "React", "D3.js"],
+  //   gradient: "from-purple-500/20 to-pink-500/20",
+  //   image: "/projects/finance-dashboard.jpg",
+  //   githubUrl: "https://github.com/USERNAME/finance-dashboard",
+  //   liveUrl: "https://finance-dashboard.vercel.app",
+  // },
+  // {
+  //   id: 3,
+  //   title: "Social App",
+  //   category: "Mobile",
+  //   description: "Feature-rich social platform connecting communities.",
+  //   tags: ["React Native", "Firebase"],
+  //   gradient: "from-green-500/20 to-emerald-500/20",
+  //   image: "/projects/social-app.jpg",
+  //   githubUrl: "https://github.com/USERNAME/social-app",
+  //   // liveUrl: "", // kalau belum ada gapapa, iconnya ga muncul
+  // },
+  // {
+  //   id: 4,
+  //   title: "Brand Identity",
+  //   category: "Design",
+  //   description: "Complete brand overhaul with logo and style guidelines.",
+  //   tags: ["Illustrator", "Branding"],
+  //   gradient: "from-orange-500/20 to-yellow-500/20",
+  //   image: "/projects/brand-identity.jpg",
+  //   // githubUrl: "", // optional
+  //   liveUrl: "https://www.behance.net/USERNAME", // bisa link behance juga
+  // },
 ];
 
 const categories = ["All", "Web Dev", "UI/UX", "Mobile", "Design"];
 
 export const ProjectsSection = () => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   const [activeCategory, setActiveCategory] = useState("All");
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [brokenImages, setBrokenImages] = useState<Record<number, boolean>>({});
 
-  const filteredProjects = activeCategory === "All" 
-    ? projects 
-    : projects.filter(p => p.category === activeCategory);
+  const filteredProjects =
+    activeCategory === "All"
+      ? projects
+      : projects.filter((p) => p.category === activeCategory);
 
   return (
     <section id="projects" className="py-32 relative">
       <div className="absolute inset-0 cyber-grid opacity-50" />
-      
-      <div className="container mx-auto px-6 lg:px-12 relative z-10" ref={ref}>
+
+      <div
+        ref={ref}
+        className="container mx-auto px-6 lg:px-12 relative z-10"
+      >
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -65,10 +97,10 @@ export const ProjectsSection = () => {
             Portfolio
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Selected <span className="text-gradient">works</span>
+            Daftar Project
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            A collection of projects showcasing my expertise
+            Berikut adalah beberapa proyek yang telah saya kerjakan
           </p>
         </motion.div>
 
@@ -106,40 +138,86 @@ export const ProjectsSection = () => {
               onMouseLeave={() => setHoveredProject(null)}
               className="group relative rounded-3xl overflow-hidden glass-card"
             >
-              {/* Gradient Background */}
-              <div className={`aspect-[16/10] relative overflow-hidden bg-gradient-to-br ${project.gradient}`}>
+              {/* Media */}
+              <div className="aspect-[16/10] relative overflow-hidden">
+                {/* FOTO (kalau ada & tidak error) */}
+                {project.image && !brokenImages[project.id] && (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    onError={() =>
+                      setBrokenImages((p) => ({ ...p, [project.id]: true }))
+                    }
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  />
+                )}
+
+                {/* FALLBACK GRADIENT (kalau image kosong / error) */}
+                {(!project.image || brokenImages[project.id]) && (
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${project.gradient}`}
+                  />
+                )}
+
+                {/* TINT GRADIENT (biar tetap cyber vibes, tapi ga nutup foto) */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-30 pointer-events-none`}
+                />
+
+                {/* DARK OVERLAY */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-transparent to-background/80"
                   initial={false}
-                  animate={{ opacity: hoveredProject === project.id ? 0.9 : 0.6 }}
+                  animate={{
+                    opacity: hoveredProject === project.id ? 0.9 : 0.6,
+                  }}
                 />
-                
+
                 {/* Hover Actions */}
                 <motion.div
                   initial={false}
-                  animate={{ opacity: hoveredProject === project.id ? 1 : 0, y: hoveredProject === project.id ? 0 : 20 }}
+                  animate={{
+                    opacity: hoveredProject === project.id ? 1 : 0,
+                    y: hoveredProject === project.id ? 0 : 20,
+                  }}
                   className="absolute inset-0 flex items-center justify-center gap-4"
                 >
-                  <motion.a
-                    href="#"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="p-4 rounded-2xl bg-primary text-primary-foreground"
-                  >
-                    <ExternalLink size={20} />
-                  </motion.a>
-                  <motion.a
-                    href="#"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="p-4 rounded-2xl glass"
-                  >
-                    <Github size={20} />
-                  </motion.a>
+                  {/* Live / Demo */}
+                  {project.liveUrl && (
+                    <motion.a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="p-4 rounded-2xl bg-primary text-primary-foreground"
+                      aria-label="Open live demo"
+                      title="Live Demo"
+                    >
+                      <ExternalLink size={20} />
+                    </motion.a>
+                  )}
+
+                  {/* GitHub */}
+                  {project.githubUrl && (
+                    <motion.a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="p-4 rounded-2xl glass"
+                      aria-label="Open GitHub repository"
+                      title="GitHub"
+                    >
+                      <Github size={20} />
+                    </motion.a>
+                  )}
                 </motion.div>
               </div>
 
-              {/* Project Info */}
+              {/* Info */}
               <div className="p-6">
                 <div className="flex items-start justify-between mb-3">
                   <div>
@@ -157,7 +235,7 @@ export const ProjectsSection = () => {
                     <ArrowUpRight size={16} />
                   </motion.div>
                 </div>
-                
+
                 <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                   {project.description}
                 </p>
@@ -176,24 +254,6 @@ export const ProjectsSection = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* View All */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6 }}
-          className="text-center mt-12"
-        >
-          <motion.a
-            href="#"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 px-8 py-4 glass rounded-2xl font-semibold hover:bg-secondary/50 transition-all duration-300"
-          >
-            View all projects
-            <ArrowUpRight size={18} />
-          </motion.a>
-        </motion.div>
       </div>
     </section>
   );
