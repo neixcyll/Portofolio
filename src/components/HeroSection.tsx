@@ -206,7 +206,7 @@ export const HeroSection = () => {
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold rounded-2xl transition-all duration-300 glow-cyan"
             >
-              My Project
+            Daftar Project
             </motion.a>
             <motion.a
               href="#contact"

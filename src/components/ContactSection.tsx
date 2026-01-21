@@ -49,10 +49,10 @@ export const ContactSection = () => {
             Contact
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Let's <span className="text-gradient">connect</span>
+            Hubungi <span className="text-gradient">Saya</span>
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Have a project in mind? Let's make it happen.
+            Punya Project di pikiran? Ayo kita mulai!
           </p>
         </motion.div>
 
