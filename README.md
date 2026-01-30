@@ -60,6 +60,103 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Fullstack Admin Dashboard (Backend + Frontend)
+
+Struktur folder utama:
+
+```
+/server            -> Backend Node.js + Express + Prisma (MySQL)
+/uploads           -> File thumbnail upload (dibuat otomatis oleh backend)
+/src               -> Frontend React (portfolio + admin UI)
+```
+
+### Backend (Node.js + Express + Prisma + MySQL)
+
+1. Masuk ke folder backend dan install dependencies:
+
+```sh
+cd server
+npm install
+```
+
+2. Buat file environment `server/.env` berdasarkan contoh berikut:
+
+```env
+DB_URL="mysql://USER:PASSWORD@localhost:3306/portfolio_db"
+JWT_SECRET="your-super-secret"
+PORT=4000
+CORS_ORIGIN="http://localhost:5173"
+ADMIN_EMAIL="admin@example.com"
+ADMIN_PASSWORD="admin12345"
+```
+
+3. Jalankan migrasi + seed data:
+
+```sh
+npx prisma migrate dev --name init
+npm run seed
+```
+
+4. Jalankan backend:
+
+```sh
+npm run dev
+```
+
+### Frontend (React)
+
+1. Install dependencies di root project:
+
+```sh
+npm install
+```
+
+2. Tambahkan `.env` di root (opsional) untuk base API:
+
+```env
+VITE_API_BASE="http://localhost:4000"
+```
+
+3. Jalankan frontend:
+
+```sh
+npm run dev
+```
+
+### CORS (contoh konfigurasi)
+
+Backend sudah menggunakan konfigurasi berikut agar React bisa akses API:
+
+```js
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    credentials: true,
+  })
+);
+```
+
+### REST API
+
+Public:
+- `GET /api/projects` -> hanya project published.
+- `GET /api/projects/:slug` -> detail project published.
+
+Admin (JWT protected):
+- `POST /api/admin/login`
+- `GET /api/admin/projects`
+- `GET /api/admin/projects/:id`
+- `POST /api/admin/projects`
+- `PUT /api/admin/projects/:id`
+- `DELETE /api/admin/projects/:id`
+- `PATCH /api/admin/projects/:id/publish`
+- `POST /api/admin/upload` (field `file`, simpan ke `/uploads` dan return URL)
+
+### Seed Data
+
+Seed akan membuat minimal 3 project + 1 admin user agar bisa langsung dites. 
+Admin default bisa diubah melalui `ADMIN_EMAIL` dan `ADMIN_PASSWORD` di `.env`.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/c00af435-a0c6-4c29-84f3-1afdda12974b) and click on Share -> Publish.

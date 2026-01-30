@@ -1,69 +1,26 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { api, getAssetUrl } from "@/lib/api";
 
-type Project = {
-  id: number;
-  title: string;
-  category: string;
-  description: string;
-  tags: string[];
-  gradient: string;
-  image?: string;
+const categories = ["All", "Web", "UIUX", "Mobile", "Game", "Other"];
 
-  // ✅ links
-  githubUrl?: string;
-  liveUrl?: string;
+const categoryLabels: Record<string, string> = {
+  Web: "Web",
+  UIUX: "UI/UX",
+  Mobile: "Mobile",
+  Game: "Game",
+  Other: "Other",
 };
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "FIxieStore",
-    category: "Web Dev",
-    description: "Website e-commerce untuk penjualan sparepart sepeda Fixie",
-    tags: ["React", "Node.js", "Supabase"],
-    gradient: "from-cyan-500/20 to-blue-500/20",
-    image: "/project/fixiestore.png", // ✅ FIX: projects (bukan project)
-    githubUrl: "https://github.com/neixcyll/FixieStoreV2.0",
-    liveUrl: "https://fixiestore.vercel.app/",
-  },
-  {
-    id: 2,
-    title: "Point Of Sales Sederhana",
-    category: "Web Dev",
-    description: "Website Point of Sales sederhana untuk toko kecil.",
-    tags: ["React, Laravel, MySQL"],
-    gradient: "from-purple-500/20 to-pink-500/20",
-    image: "/project/pos.png",
-    githubUrl: "https://github.com/neixcyll/posv1",
-    liveUrl: "https://github.com/neixcyll/posv1",
-  },
-  // {
-  //   id: 3,
-  //   title: "Social App",
-  //   category: "Mobile",
-  //   description: "Feature-rich social platform connecting communities.",
-  //   tags: ["React Native", "Firebase"],
-  //   gradient: "from-green-500/20 to-emerald-500/20",
-  //   image: "/projects/social-app.jpg",
-  //   githubUrl: "https://github.com/USERNAME/social-app",
-  //   // liveUrl: "", // kalau belum ada gapapa, iconnya ga muncul
-  // },
-  // {
-  //   id: 4,
-  //   title: "Brand Identity",
-  //   category: "Design",
-  //   description: "Complete brand overhaul with logo and style guidelines.",
-  //   tags: ["Illustrator", "Branding"],
-  //   gradient: "from-orange-500/20 to-yellow-500/20",
-  //   image: "/projects/brand-identity.jpg",
-  //   // githubUrl: "", // optional
-  //   liveUrl: "https://www.behance.net/USERNAME", // bisa link behance juga
-  // },
-];
-
-const categories = ["All", "Web Dev", "UI/UX", "Mobile", "Design"];
+const gradients: Record<string, string> = {
+  Web: "from-cyan-500/20 to-blue-500/20",
+  UIUX: "from-purple-500/20 to-pink-500/20",
+  Mobile: "from-green-500/20 to-emerald-500/20",
+  Game: "from-orange-500/20 to-yellow-500/20",
+  Other: "from-slate-500/20 to-slate-700/20",
+};
 
 export const ProjectsSection = () => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -73,10 +30,15 @@ export const ProjectsSection = () => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
   const [brokenImages, setBrokenImages] = useState<Record<number, boolean>>({});
 
-  const filteredProjects =
-    activeCategory === "All"
-      ? projects
-      : projects.filter((p) => p.category === activeCategory);
+  const { data: projects = [] } = useQuery({
+    queryKey: ["projects"],
+    queryFn: api.getPublicProjects,
+  });
+
+  const filteredProjects = useMemo(() => {
+    if (activeCategory === "All") return projects;
+    return projects.filter((project) => project.category === activeCategory);
+  }, [activeCategory, projects]);
 
   return (
     <section id="projects" className="py-32 relative">
@@ -121,7 +83,7 @@ export const ProjectsSection = () => {
                   : "glass text-muted-foreground hover:text-foreground"
               }`}
             >
-              {category}
+              {category === "All" ? "All" : categoryLabels[category]}
             </button>
           ))}
         </motion.div>
@@ -141,9 +103,9 @@ export const ProjectsSection = () => {
               {/* Media */}
               <div className="aspect-[16/10] relative overflow-hidden">
                 {/* FOTO (kalau ada & tidak error) */}
-                {project.image && !brokenImages[project.id] && (
+                {project.thumbnailUrl && !brokenImages[project.id] && (
                   <img
-                    src={project.image}
+                    src={getAssetUrl(project.thumbnailUrl)}
                     alt={project.title}
                     loading="lazy"
                     onError={() =>
@@ -154,15 +116,19 @@ export const ProjectsSection = () => {
                 )}
 
                 {/* FALLBACK GRADIENT (kalau image kosong / error) */}
-                {(!project.image || brokenImages[project.id]) && (
+                {(!project.thumbnailUrl || brokenImages[project.id]) && (
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br ${project.gradient}`}
+                    className={`absolute inset-0 bg-gradient-to-br ${
+                      gradients[project.category] || gradients.Other
+                    }`}
                   />
                 )}
 
                 {/* TINT GRADIENT (biar tetap cyber vibes, tapi ga nutup foto) */}
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-30 pointer-events-none`}
+                  className={`absolute inset-0 bg-gradient-to-br ${
+                    gradients[project.category] || gradients.Other
+                  } opacity-30 pointer-events-none`}
                 />
 
                 {/* DARK OVERLAY */}
@@ -184,9 +150,9 @@ export const ProjectsSection = () => {
                   className="absolute inset-0 flex items-center justify-center gap-4"
                 >
                   {/* Live / Demo */}
-                  {project.liveUrl && (
+                  {project.demoUrl && (
                     <motion.a
-                      href={project.liveUrl}
+                      href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.1 }}
@@ -222,7 +188,7 @@ export const ProjectsSection = () => {
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <span className="text-[10px] text-primary uppercase tracking-wider font-semibold">
-                      {project.category}
+                      {categoryLabels[project.category] || project.category}
                     </span>
                     <h3 className="text-xl font-bold mt-1 group-hover:text-gradient transition-all duration-300">
                       {project.title}
@@ -241,7 +207,7 @@ export const ProjectsSection = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
+                  {(project.tags || []).map((tag) => (
                     <span
                       key={tag}
                       className="px-3 py-1 text-xs bg-secondary rounded-lg text-secondary-foreground"
