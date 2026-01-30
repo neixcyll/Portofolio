@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DB_URL")
+}
+
+enum Category {
+  Web
+  UIUX
+  Mobile
+  Game
+  Other
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Project {
+  id           Int      @id @default(autoincrement())
+  title        String
+  slug         String   @unique
+  category     Category
+  description  String   @db.Text
+  tags         Json
+  demoUrl      String?  @db.VarChar(2048)
+  githubUrl    String?  @db.VarChar(2048)
+  thumbnailUrl String?  @db.VarChar(2048)
+  featured     Boolean  @default(false)
+  published    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
